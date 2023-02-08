@@ -11,3 +11,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* organisze in a row structure each element of the board class */
+.board {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  text-align: center;
+  /* establish a fixed position for all the elements of the board */
+}
+
+.state {
+  /* each element should take 1/5 of the screen */
+  width: 20%;
+  /* align all the elements vertically */
+  align-items: center;
+}
+
+/* add a nice design to the card class */
+.card {
+  border: 1px solid black;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 130px; */
+  height: 100px;
+  justify-content: center;
+  padding: 10px;
+}
