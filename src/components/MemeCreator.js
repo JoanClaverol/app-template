@@ -9,19 +9,12 @@ const MemeCreator = ({ meme }) => {
   const [fontSize, setFontSize] = useState("25px");
   const exportRef = useRef();
 
-  const handleExport = () => {
-
-  };
-
-
   const handleTopTextChange = (e) => {
     setTopText(e.target.value);
   }
-
   const handleBottomTextChange = (e) => {
     setBottomText(e.target.value);
   }
-
   const handleFontSizeChange = (e) => {
     setFontSize(`${parseInt(e.target.value)}px`);
   }
