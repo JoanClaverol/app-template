@@ -47,7 +47,6 @@ const MemeCreator = ({ meme }) => {
         justifyContent: "center",
         alignItems: "center"
       }}>
-        {/* add an input to clean all the other inputs */}
         <input type="button" value="Clean" onClick={() => {
           setTopText("");
           setBottomText("");
@@ -57,10 +56,8 @@ const MemeCreator = ({ meme }) => {
           onChange={handleTopTextChange} />
         <input type="text" placeholder="Bottom Text"
           onChange={handleBottomTextChange} />
-        {/* input that stores the value into the variables fontSize to define the size of teh text by introducing a value*/}
         <input type="number" placeholder={fontSize}
           onChange={handleFontSizeChange}
-          // min value accepted is 10 max is 100
           min="25" max="100"
         />
         <input type="button" value="Export"
@@ -68,14 +65,10 @@ const MemeCreator = ({ meme }) => {
       </div>
       <div style={{
         position: 'relative',
-        // center all the elements
         margin: 'auto',
-        // add top margin
         marginTop: '20px',
-        // define max width and height
         maxWidth: '1200px',
         maxHeight: '700px',
-        // align center
         textAlign: 'center',
         marginBottom: '20px',
       }} className="generatedMeme" ref={exportRef}>
@@ -85,7 +78,6 @@ const MemeCreator = ({ meme }) => {
         <img src={meme.url} alt="meme" style={{
           maxHeight: '700px',
           maxWidth: '700px',
-          // center the image
           margin: 'auto',
         }}
         />
