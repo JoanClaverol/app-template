@@ -11,3 +11,75 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.swipe-to-confirm-button {
+  position: relative;
+  width: 300px;
+  height: 50px;
+  margin: 50px auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.swipe-to-confirm-button__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.swipe-to-confirm-button__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.swipe-to-confirm-button__label::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: green;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.swipe-to-confirm-button__button:active {
+  transform: translateX(250px);
+}
+
+.swipe-to-confirm-button__button:active~.swipe-to-confirm-button__label {
+  opacity: 0;
+}
+
+.swipe-to-confirm-button__button:active~.swipe-to-confirm-button__label::after {
+  opacity: 1;
+}
