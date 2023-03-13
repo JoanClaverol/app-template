@@ -1,91 +1,56 @@
-import React from 'react';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { useState } from 'react';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-};
-
-const DropZone = ({ onDrop, children }) => {
-  const [{ canDrop, isOver }, drop] = useDrop({
-    accept: 'box',
-    drop: onDrop,
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-      item: monitor.getItem(),
-    }),
-  });
-
-  const isActive = canDrop && isOver;
-
-  return (
-    <div ref={drop} style={{
-      ...style,
-      backgroundColor: isActive ? 'gray' : 'white',
-      // keep the same width as the children
-      width: '230px',
-    }}>
-      {children}
-    </div>
-  );
-};
-
-const DraggableBox = ({ id, text, onDrop, zone }) => {
-  const [{ isDragging }, drag] = useDrag({
-    type: 'box',
-    item: () => ({ id, zone }),
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  const opacity = isDragging ? 0.4 : 1;
-
-  return (
-    <div ref={drag} style={{ ...style, opacity }}>
-      {text}
-    </div>
-  );
-};
+import DraggableBox from './components/DraggableBox';
+import DropZone from './components/DropZone';
+import cardsData from './data/cards';
 
 const App = () => {
-  const [boxes, setBoxes] = React.useState([
-    { id: 1, text: 'Drag me to another zone', zone: 'zone-1' },
-    { id: 2, text: 'Drag me to another zone', zone: 'zone-1' },
-    { id: 3, text: 'Drag me to another zone', zone: 'zone-2' },
-    { id: 4, text: 'Drag me to another zone', zone: 'zone-3' },
-  ]);
+  // select the first two elements from the cardsData array
+  const [cards, setCards] = useState(cardsData); // .slice(0, 2) 
+  console.log('cards');
 
-  const handleDrop = (boxId, newZone) => {
-    console.log('boxId', boxId, 'newZone', newZone);
-    const updatedBoxes = boxes.map((box) => (box.id === boxId ? { ...box, zone: newZone } : box));
-    console.log('updatedBoxes', updatedBoxes);
-    setBoxes([...updatedBoxes]);
+  const handleDrop = (cardId, newStatus) => {
+    const updatedCards = cards.map((card) => {
+      if (card.id === cardId) {
+        const newChange = {
+          date: new Date().toISOString(),
+          user: "Jane Smith", // replace with actual user data
+          status: newStatus,
+        };
+        const updatedChanges = [...card.changes, newChange];
+        return { ...card, status: newStatus, changes: updatedChanges };
+      }
+      return card;
+    });
+    console.log(updatedCards);
+    setCards(updatedCards);
   };
-
   // render 3 zones
-  const zones = ['zone-1', 'zone-2', 'zone-3'];
+  const allStatus = ['backlog', 'todo', 'doing', 'review', 'done'];
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-        {zones.map((zone, index) => (
-          <DropZone key={index} onDrop={(item) => handleDrop(item.id, zone)}>
-            {boxes
-              .filter((box) => box.zone === zone)
-              .map((box) => (
-                <DraggableBox key={box.id} id={box.id} text={box.text} />
-              ))
-            }
-          </DropZone>
+        {allStatus.map((status, index) => (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }} key={index}>
+            <h3>{status}</h3>
+            <DropZone key={index} onDrop={(item) => handleDrop(item.id, status)}>
+              {cards
+                .filter((card) => card.status === status)
+                .map((card) => (
+                  <DraggableBox key={card.id} id={card.id} card={card} />
+                ))
+              }
+            </DropZone>
+          </div>
         ))}
       </div>
-    </DndProvider>
+    </DndProvider >
   );
 };
 

@@ -18,3 +18,20 @@ code {
   align-items: center;
   height: 100vh;
 }
+
+.dropZone,
+.draggableBox {
+  border: 1px dashed gray;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  cursor: move;
+}
+
+.card {
+  border: '1px solid #ccc';
+  border-radius: '3px';
+  padding: '5px';
+  background-color: 'white';
+  cursor: 'move';
+}
